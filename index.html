@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JBlocks Example</title>
+</head>
+<body>
+    <div class="foo" data-b="сounter" data-p='{ "step": 2 }'>
+        <button class="js-inc">+</button>
+        <button class="js-dec">-</button>
+        <span class="js-info">0</span>
+    </div>
+
+    <script type="text/javascript" src="https://yastatic.net/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="jblocks.js"></script>
+
+    <script type="text/javascript">
+        $.define('сounter', {
+            events: {
+                'b-inited': 'oninit',
+                'click .js-inc': 'onClickPlus',
+                'click .js-dec': 'onClickMinus'
+            },
+
+            methods: {
+                oninit: function() {
+                    this.$info = this.$node.find('.js-info');
+                    this.count = 0;
+                },
+
+                /**
+                 * Обработчик клика на плюс
+                 */
+                onClickPlus: function() {
+                    this.inc();
+                    this.update();
+                },
+
+                /**
+                 * Обработчик клика на минус
+                 */
+                onClickMinus: function() {
+                    this.dec();
+                    this.update();
+                },
+
+                /**
+                 * Увеличить счетчик
+                 */
+                inc: function() {
+                    this.count += this.params.step;
+                },
+
+                /**
+                 * Уменьшить счетчик
+                 */
+                dec: function() {
+                    this.count -= this.params.step;
+                },
+
+                /**
+                 * Нарисует новое значение
+                 */
+                update: function() {
+                    this.$info.text(this.count);
+                }
+            }
+        });
+
+        // Инициализируем все блоки в документе
+        $(document).initBlocks();
+    </script>
+</body>
+</html>
