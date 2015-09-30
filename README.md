@@ -11,8 +11,9 @@
 
 ```html
 <!-- Блок счетчика: обладает js-функциональностью -->
-<div class="bar" data-b="counter" data-p='{ "step": "2" }'>
-    <button class="js-count">+</button>
+<div class="foo" data-b="сounter" data-p='{ "step": 2 }'>
+    <button class="js-inc">+</button>
+    <button class="js-dec">-</button>
     <span class="js-info">0</span>
 </div>
 ```
@@ -22,28 +23,30 @@
 В джаваскрипте нужно описать поведение блока:
 
 ```js
-$.jb.define('my-block', {
-
-    // События: встроенные события блока и DOM-события его элементов
+$.define('сounter', {
     events: {
         'b-inited': 'oninit',
         'click .js-inc': 'onClickPlus',
         'click .js-dec': 'onClickMinus'
     },
 
-    // Методы: то, что можно указывать в события, а так же его открытое АПИ
-    // Эти методы можно дернуть, получив экземпляр блока через getBlocks
     methods: {
         oninit: function() {
             this.$info = this.$node.find('.js-info');
             this.count = 0;
         },
 
+        /**
+         * Обработчик клика на плюс
+         */
         onClickPlus: function() {
             this.inc();
             this.update();
         },
 
+        /**
+         * Обработчик клика на минус
+         */
         onClickMinus: function() {
             this.dec();
             this.update();
@@ -60,7 +63,7 @@ $.jb.define('my-block', {
          * Уменьшить счетчик
          */
         dec: function() {
-
+            this.count -= this.params.step;
         },
 
         /**
@@ -71,6 +74,9 @@ $.jb.define('my-block', {
         }
     }
 });
+
+// Инициализируем все блоки в документе
+$(document).initBlocks();
 ```
 
 ## events
@@ -81,8 +87,8 @@ $.jb.define('my-block', {
 
 Стандартные события блока:
 
-- `b-init` выполнятся при инициализации блока
-- `b-destroy` выполнятся при уничтожении блока
+- `b-inited` выполнятся после инициализации блока
+- `b-destroyed` выполнятся после уничтожения блока
 
 ## methods
 
@@ -96,7 +102,20 @@ $.jb.define('my-block', {
 var blocks = $('.bar').getBlocks();
 
 blocks.each(function() {
-    // this - экземпляр блока
+    // this - экземпляр блока, увеличит счетчик
     this.inc();
 })
+```
+
+Так же можно создавать и удалять блоки, которые находятся внутри определенного элемента страницы, например, во всем документе при инициализации приложения:
+
+```
+// Инициализируем все блоки в документе
+$(document).initBlocks();
+```
+
+Для уничтожения:
+
+```
+$(document).destroyBlocks();
 ```
