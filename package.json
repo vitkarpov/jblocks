@@ -2,6 +2,7 @@
   "name": "jblocks",
   "devDependencies": {
     "gulp": "^3.9.0",
+    "gulp-browserify": "^0.5.1",
     "gulp-mocha": "^2.1.3",
     "gulp-mocha-phantomjs": "^0.10.1",
     "jquery": "^2.1.4",
