@@ -1,5 +1,9 @@
 {
   "name": "jblocks",
+  "version": "0.1.0",
+  "description": "Nanoframework (~ 100 lines of code!) for creating UI-components",
+  "author": "Vit Karpov <viktor.s.karpov@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-browserify": "^0.5.1",
@@ -8,5 +12,31 @@
     "jquery": "^2.1.4",
     "mocha": "^2.3.3",
     "should": "^7.1.0"
-  }
+  },
+  "main": "dist/jblocks.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-mocha": "^2.1.3",
+    "gulp-browserify": "^0.5.1",
+    "gulp-mocha-phantomjs": "^0.10.1",
+    "should": "^7.1.0",
+    "jquery": "^2.1.4"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vitkarpov/jblocks.git"
+  },
+  "keywords": [
+    "jquery"
+  ],
+  "bugs": {
+    "url": "https://github.com/vitkarpov/jblocks/issues"
+  },
+  "homepage": "https://github.com/vitkarpov/jblocks#readme"
 }
