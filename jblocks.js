@@ -35,6 +35,7 @@
         $.extend(this, info, decl.methods);
 
         this._addEvents();
+        this._setInited();
         this._trigger('b-inited');
     };
 
@@ -59,6 +60,13 @@
     };
 
     /**
+     * Mark the block as inited
+     */
+    Block.prototype._setInited = function() {
+        this.$node.addClass('jb-inited');
+    };
+
+    /**
      * Triggers specified event
      */
     Block.prototype._trigger = function(name) {
@@ -70,6 +78,8 @@
      */
     Block.prototype.destroy = function() {
         _cache[this._id] = null;
+        this.$node.removeClass('jb-inited');
+        this.$node.off();
         this._trigger('b-destroyed');
     };
 
@@ -123,5 +133,8 @@
             this.destroy();
         });
     };
+
+    // for some need to get Block constuctor
+    $.Block = Block;
 
 }(jQuery));
