@@ -34,7 +34,7 @@ Block.prototype._addEvents = function() {
 
     for (var e in events) {
         if (events.hasOwnProperty(e)) {
-            var p = e.split(' ');
+            var p = e.split(' ')[2];
             var handler = events[e];
 
             if (typeof handler === 'string') {
