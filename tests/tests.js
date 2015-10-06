@@ -1,5 +1,5 @@
 var html = [
-    '<div class="foo" data-b="сounter" data-p=\'{ "step": 2 }\'>',
+    '<div class="foo" data-b="counter" data-p=\'{ "step": 2 }\'>',
     '<button class="js-inc">+</button>',
     '<button class="js-dec">-</button>',
     '<span class="js-info">0</span>',
@@ -17,7 +17,7 @@ describe('jblocks', function() {
 
     describe('#getBlocks', function() {
         it('should return jquery collection of blocks instances', function() {
-            $('.foo').getBlocks().each(function() {
+            $('.foo').jblocks('get').each(function() {
                 this.should.be.an.instanceOf($.Block);
             });
         });
@@ -33,7 +33,7 @@ describe('jblocks', function() {
 
             it('should throw an error', function() {
                 try {
-                    $('.bar').getBlocks();
+                    $('.bar').jblocks('get');
                 } catch(e) {
                     e.should.be.ok();
                 }
@@ -43,27 +43,27 @@ describe('jblocks', function() {
 
     describe('#initBlocks', function() {
         it('should init blocks', function() {
-            $(document).initBlocks();
+            $(document).jblocks('init');
             $('.foo').hasClass('jb-inited').should.be.true;
         });
     });
 
     describe('#destroyBlocks', function() {
         it('should destroy blocks', function() {
-            $(document).destroyBlocks();
+            $(document).jblocks('destroy');
             $('.foo').hasClass('jb-inited').should.be.false;
         });
     });
 
     describe('Block', function() {
         it('should have params declared in html', function() {
-            $('.foo').getBlocks().each(function() {
+            $('.foo').jblocks('get').each(function() {
                 this.params.should.eql({ step: 2 });
             });
         });
 
         it('should have declared methods', function() {
-            $('.foo').getBlocks().each(function() {
+            $('.foo').jblocks('get').each(function() {
                 this.inc.should.be.a.Function;
             });
         });

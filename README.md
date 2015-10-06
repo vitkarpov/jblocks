@@ -32,7 +32,8 @@
 В джаваскрипте нужно описать поведение блока:
 
 ```js
-$.define('сounter', {
+$.jblocks({
+    name: 'counter',
     events: {
         'b-inited': 'oninit',
         'click .js-inc': 'onClickPlus',
@@ -85,7 +86,7 @@ $.define('сounter', {
 });
 
 // Инициализируем все блоки в документе
-$(document).initBlocks();
+$(document).jblocks('init');
 ```
 
 ## events
@@ -108,7 +109,7 @@ $(document).initBlocks();
 Есть возможность получать экземпляры блока с помощью метода `getBlocks`, который доступен в прототипе `jQuery`, и вызывать методы блоков, которые были в декларации:
 
 ```js
-var blocks = $('.bar').getBlocks();
+var blocks = $('.bar').jblocks('get');
 
 blocks.each(function() {
     // this - экземпляр блока, увеличит счетчик
@@ -120,11 +121,11 @@ blocks.each(function() {
 
 ```js
 // Инициализируем все блоки в документе
-$(document).initBlocks();
+$(document).jblocks('init');
 ```
 
 Аналогично для уничтожения:
 
 ```js
-$(document).destroyBlocks();
+$(document).jblocks('destroy');
 ```

@@ -34,12 +34,12 @@ Block.prototype._addEvents = function() {
 
     for (var e in events) {
         if (events.hasOwnProperty(e)) {
-            var p = e.split(' ');
+            var p = e.split(' ',2);
             var handler = events[e];
-
             if (typeof handler === 'string') {
                 handler = decl.methods[handler];
             }
+
             this.$node.on(p[0], p[1], handler.bind(this));
         }
     }
