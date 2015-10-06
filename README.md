@@ -32,7 +32,7 @@
 В джаваскрипте нужно описать поведение блока:
 
 ```js
-$.jblocks('define', {
+$.jblocks({
     name: 'counter',
     events: {
         'b-inited': 'oninit',
