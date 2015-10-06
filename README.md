@@ -32,7 +32,8 @@
 В джаваскрипте нужно описать поведение блока:
 
 ```js
-$.jbDefine('сounter', {
+$.jblocks('define', {
+    name: 'counter',
     events: {
         'b-inited': 'oninit',
         'click .js-inc': 'onClickPlus',
@@ -108,7 +109,7 @@ $(document).jblocks('init');
 Есть возможность получать экземпляры блока с помощью метода `getBlocks`, который доступен в прототипе `jQuery`, и вызывать методы блоков, которые были в декларации:
 
 ```js
-var blocks = $('.bar').jblocks('list');
+var blocks = $('.bar').jblocks('get');
 
 blocks.each(function() {
     // this - экземпляр блока, увеличит счетчик

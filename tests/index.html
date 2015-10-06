@@ -18,13 +18,14 @@
     <div id="mocha"></div>
 
     <script type="text/javascript">
-        $.jbDefine('сounter', {
+
+        $.jblocks('define', {
+            name: 'counter',
             events: {
                 'b-inited': 'oninit',
                 'click .js-inc': 'onClickPlus',
                 'click .js-dec': 'onClickMinus'
             },
-
             methods: {
                 oninit: function() {
                     this.$info = this.$node.find('.js-info');
