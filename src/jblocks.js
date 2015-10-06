@@ -1,23 +1,22 @@
 var helpers = require('./helpers');
 var Block = require('./Block');
 
-var methods = {
-    staticMethods: {
-        /**
-         * Block's declaration
-         * @param  {Object} proto
-         */
-        'define': function (proto) {
-            if (!('name' in proto)) {
-                throw new Error('Need define block name');
-            }
-            if (helpers.decls[proto.name]) {
-                throw new Error('Can`t redefine ' + proto.name + ' block');
-            }
-            helpers.decls[proto.name] = proto;
-        }
-    },
-    selectorMethods: {
+/**
+ * Block's declaration
+ * @param  {Object} proto
+ */
+$.jblocks = function (proto) {
+    if (!('name' in proto)) {
+        throw new Error('Need to define block`s name');
+    }
+    if (helpers.decls[proto.name]) {
+        throw new Error('Can`t redefine ' + proto.name + ' block');
+    }
+    helpers.decls[proto.name] = proto;
+};
+
+$.fn.jblocks = function (method) {
+    var methods = {
         /**
          * Init all blocks inside
          */
@@ -54,28 +53,13 @@ var methods = {
                 return block;
             });
         }
-    }
-}
-
-function initMethod(self, type, args) {
-    args = Array.prototype.slice.call(args, 0);
-    var method = args.splice(0, 1);
-    if (method in methods[type]) {
-        return methods[type][method].apply(self, args);
+    };
+    if (method in methods) {
+        return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
     } else {
         throw new Error('Can`t find method ' + method);
     }
 };
-
-
-$.jblocks = function () {
-    return initMethod(this, 'staticMethods', arguments);
-}
-
-$.fn.jblocks = function () {
-    return initMethod(this, 'selectorMethods', arguments);
-}
-
 
 // to get Block from global outspace
 $.Block = Block;
