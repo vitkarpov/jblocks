@@ -1,5 +1,8 @@
 # JBlocks
 
+[![NPM version](https://badge.fury.io/js/jblocks.png)](http://badge.fury.io/js/jblocks)
+[![Build Status](https://travis-ci.org/vitkarpov/jblocks.png?branch=master)](https://travis-ci.org/vitkarpov/jblocks)
+
 Небольшой jQuery-плагин (~ 100 строк) для организации компонентов (виджетов) на странице
 
 Строится на трех основных принципах:

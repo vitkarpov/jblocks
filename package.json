@@ -18,8 +18,8 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "gulp test",
-    "build": "gulp build"
+    "test": "node node_modules/.bin/gulp test",
+    "build": "node node_modules/.bin/gulp test"
   },
   "repository": {
     "type": "git",
