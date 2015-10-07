@@ -1,4 +1,4 @@
 language: node_js
-before_script: npm build
+before_script: npm run-script build
 node_js:
   - 0.10
