@@ -55,6 +55,68 @@ describe('jblocks', function() {
         });
     });
 
+    describe('#events', function() {
+        describe('on', function() {
+            it('should attach a handler', function() {
+                var called = false;
+                var block = $('.foo').jblocks('get')[0];
+
+                block.on('inc', function() {
+                    called = true;
+                });
+                block.inc();
+
+                called.should.be.ok();
+            });
+        })
+        describe('off', function() {
+            it('should remove the spicific handler', function() {
+                var called = false;
+                var block = $('.foo').jblocks('get')[0];
+
+                var handler = function() {
+                    called = true;
+                };
+
+                block.on('inc', handler);
+                block.off('inc', handler);
+                block.inc();
+
+                called.should.be.not.ok();
+            });
+            it('should remove all handlers if second arg is not defined', function() {
+                var called = 0;
+                var block = $('.foo').jblocks('get')[0];
+
+                block.on('inc', function() {
+                    called++
+                });
+                block.on('inc', function() {
+                    called++
+                });
+                block.off('inc');
+                block.inc();
+
+                called.should.be.eql(0);
+            });
+            it('should remove all events if there are no args defined', function() {
+                var called = 0;
+                var block = $('.foo').jblocks('get')[0];
+
+                block.on('inc', function() {
+                    called++
+                });
+                block.on('dec', function() {
+                    called++
+                });
+                block.off();
+                block.inc();
+
+                called.should.be.eql(0);
+            });
+        });
+    });
+
     describe('Block', function() {
         it('should have params declared in html', function() {
             $('.foo').jblocks('get').each(function() {
