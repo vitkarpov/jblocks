@@ -18,7 +18,7 @@ var methods = {
     },
     /**
      * Returns block from cache or create it if doesn't exist
-     * @return {Block} block
+     * @return {jQuery}
      */
     'get': function () {
         return this.map(function () {
@@ -36,6 +36,19 @@ var methods = {
             helpers.cache[bid] = block;
 
             return block;
+        });
+    },
+    /**
+     * Returns blocks inside
+     * @return {jQuery}
+     */
+    'find': function(filter) {
+        var selector = '[data-b]';
+        if (filter) {
+            selector = '[data-b="' + filter + '"]';
+        }
+        return this.find(selector).map(function() {
+            return $(this).jblocks('get')[0];
         });
     }
 };
