@@ -18,11 +18,11 @@
     <div id="mocha"></div>
 
     <script type="text/javascript">
-
         $.jblocks({
             name: 'counter',
             events: {
                 'b-inited': 'oninit',
+                'click': 'onClickSelf',
                 'click .js-inc': 'onClickPlus',
                 'click .js-dec': 'onClickMinus'
             },
@@ -30,6 +30,10 @@
                 oninit: function() {
                     this.$info = this.$node.find('.js-info');
                     this.count = 0;
+                },
+
+                onClickSelf: function() {
+                    this.emit('clicked');
                 },
 
                 /**
