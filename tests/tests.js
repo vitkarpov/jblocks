@@ -3,7 +3,8 @@ var html = [
     '<button class="js-inc">+</button>',
     '<button class="js-dec">-</button>',
     '<span class="js-info">0</span>',
-    '</div>'
+    '</div>',
+    '<div class="bar" data-b="bar"></div>'
 ].join();
 
 describe('jblocks', function() {
@@ -38,6 +39,18 @@ describe('jblocks', function() {
                     e.should.be.ok();
                 }
             });
+        });
+    });
+
+    describe('#find', function() {
+        it('should find blocks inside', function() {
+            $(document).jblocks('find').each(function() {
+                this.should.be.an.instanceOf($.Block);
+            });
+        });
+        it('should use filter as second arg', function() {
+            var blocks = $(document).jblocks('find', 'counter');
+            blocks.length.should.be.eql(1);
         });
     });
 
