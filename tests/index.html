@@ -53,6 +53,7 @@
                  */
                 inc: function() {
                     this.count += this.params.step;
+                    this.emit('inc', 'foo');
                 },
 
                 /**
@@ -60,6 +61,7 @@
                  */
                 dec: function() {
                     this.count -= this.params.step;
+                    this.emit('dec', 'bar');
                 },
 
                 /**

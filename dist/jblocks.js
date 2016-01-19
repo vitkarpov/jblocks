@@ -23,7 +23,36 @@ var Block = function(block) {
 
     this._addEvents();
     this._setInited();
-    this._trigger('b-inited');
+    this.emit('b-inited');
+};
+
+/**
+ * Adds handler for block's event
+ * @param  {string} name
+ * @param  {function} callback
+ */
+Block.prototype.on = function(name, callback) {
+    this.$node.on(this.name + ':' + name, callback);
+    return this;
+};
+
+/**
+ * Removes handler for block's event
+ * @param  {string} name
+ * @param  {function} callback
+ */
+Block.prototype.off = function(name, callback) {
+    var event = this.name + ':' + name;
+
+    if (!name) {
+        this.$node.off();
+    } else if (!callback) {
+        this.$node.off(event);
+    } else {
+        this.$node.off(event, callback);
+    }
+
+    return this;
 };
 
 /**
@@ -41,7 +70,7 @@ Block.prototype._addEvents = function() {
                 handler = decl.methods[handler];
             }
 
-            this.$node.on(p[0], p[1], handler.bind(this));
+            this.on(p[0], p[1], handler.bind(this));
         }
     }
 };
@@ -55,9 +84,11 @@ Block.prototype._setInited = function() {
 
 /**
  * Triggers specified event
+ * @param {string} name
  */
-Block.prototype._trigger = function(name) {
-    this.$node.trigger(name);
+Block.prototype.emit = function(name) {
+    this.$node.trigger(this.name + ':' + name);
+    return this;
 };
 
 /**
@@ -66,8 +97,8 @@ Block.prototype._trigger = function(name) {
 Block.prototype.destroy = function() {
     helpers.cache[this._id] = null;
     this.$node.removeClass('jb-inited');
-    this.$node.off();
-    this._trigger('b-destroyed');
+    this.off();
+    this.emit('b-destroyed');
 };
 
 module.exports = Block;
