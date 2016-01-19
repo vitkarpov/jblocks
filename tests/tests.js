@@ -68,7 +68,7 @@ describe('jblocks', function() {
 
                 called.should.be.ok();
             });
-        })
+        });
         describe('off', function() {
             it('should remove the spicific handler', function() {
                 var called = false;
@@ -113,6 +113,19 @@ describe('jblocks', function() {
                 block.inc();
 
                 called.should.be.eql(0);
+            });
+        });
+        describe('declaration', function() {
+            it('should add event to the block`s node if selector is not specified', function() {
+                var block = $('.foo').jblocks('get')[0];
+                var called = false;
+
+                block.on('clicked', function() {
+                    called = true;
+                });
+                block.$node.click();
+
+                called.should.be.ok();
             });
         });
     });
