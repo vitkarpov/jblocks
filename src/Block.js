@@ -22,7 +22,7 @@ var Block = function(block) {
 
     this._addEvents();
     this._setInited();
-    this.emit('b-inited');
+    this.emit(this._getEventName('b-inited'));
 };
 
 /**
@@ -31,7 +31,7 @@ var Block = function(block) {
  * @param  {function} callback
  */
 Block.prototype.on = function(name, callback) {
-    this.$node.on(this.name + ':' + name, callback);
+    this.$node.on(this._getEventName(name), callback);
     return this;
 };
 
@@ -41,7 +41,7 @@ Block.prototype.on = function(name, callback) {
  * @param  {function} callback
  */
 Block.prototype.off = function(name, callback) {
-    var event = this.name + ':' + name;
+    var event = this._getEventName(name);
 
     if (!name) {
         this.$node.off();
@@ -87,7 +87,7 @@ Block.prototype._setInited = function() {
  * @param {string} name
  */
 Block.prototype.emit = function(name) {
-    this.$node.trigger(this.name + ':' + name);
+    this.$node.trigger(this._getEventName(name));
     return this;
 };
 
@@ -98,7 +98,16 @@ Block.prototype.destroy = function() {
     helpers.cache[this._id] = null;
     this.$node.removeClass('jb-inited');
     this.off();
-    this.emit('b-destroyed');
+    this.emit(this._getEventName('b-destroyed'));
+};
+
+/**
+ * Возвращает имя события с учетом пространства имен
+ * @param  {string} name
+ * @return {string}
+ */
+Block.prototype._getEventName = function(name) {
+    return this.id + ':' + name;
 };
 
 module.exports = Block;
