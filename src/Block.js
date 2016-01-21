@@ -22,7 +22,7 @@ var Block = function(block) {
 
     this._addEvents();
     this._setInited();
-    this.emit(this._getEventName('b-inited'));
+    this.$node.trigger('b-inited');
 };
 
 /**
@@ -98,7 +98,7 @@ Block.prototype.destroy = function() {
     helpers.cache[this._id] = null;
     this.$node.removeClass('jb-inited');
     this.off();
-    this.emit(this._getEventName('b-destroyed'));
+    this.$node.trigger('b-destroyed');
 };
 
 /**
