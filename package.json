@@ -1,6 +1,6 @@
 {
   "name": "jblocks",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "description": "Nanoframework (~ 100 lines of code!) for creating UI-components",
   "author": "Vit Karpov <viktor.s.karpov@gmail.com>",
   "license": "MIT",
