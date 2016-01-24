@@ -95,9 +95,10 @@ Block.prototype._setInited = function() {
 /**
  * Triggers specified event
  * @param {string} name
+ * @param {*} additional data for callback
  */
-Block.prototype.emit = function(name) {
-    this.$node.trigger(this._getEventName(name));
+Block.prototype.emit = function(name, data) {
+    this.$node.trigger(this._getEventName(name), data);
     return this;
 };
 
