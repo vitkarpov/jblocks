@@ -19,7 +19,15 @@
 
     <script type="text/javascript">
         $.jblocks({
-            name: 'bar'
+            name: 'bar',
+            events: {
+                'b-inited': 'oninit'
+            },
+            methods: {
+                oninit: function() {
+                    this.emit('inited');
+                }
+            }
         });
         $.jblocks({
             name: 'counter',
@@ -33,6 +41,7 @@
                 oninit: function() {
                     this.$info = this.$node.find('.js-info');
                     this.count = 0;
+                    this.emit('inited');
                 },
 
                 onClickSelf: function() {

@@ -23,7 +23,7 @@ var Block = function(block) {
 
     this._addEvents();
     this._setInited();
-    this.$node.trigger('b-inited');
+    this.emit('b-inited');
 };
 
 /**
@@ -65,13 +65,18 @@ Block.prototype._addEvents = function() {
     for (var e in events) {
         if (events.hasOwnProperty(e)) {
             var p = e.split(' ', 2);
+            var eventName = p[0];
+            var selector = p[1];
             var handler = events[e];
 
+            if (this._isInnerEvent(eventName)) {
+                eventName = this._getEventName(eventName);
+            }
             if (typeof handler === 'string') {
                 handler = decl.methods[handler];
             }
 
-            this.$node.on(p[0], p[1], handler.bind(this));
+            this.$node.on(eventName, selector, handler.bind(this));
         }
     }
 };
@@ -99,7 +104,7 @@ Block.prototype.destroy = function() {
     helpers.cache[this._id] = null;
     this.$node.removeClass('jb-inited');
     this.off();
-    this.$node.trigger('b-destroyed');
+    this.emit('b-destroyed');
 };
 
 /**
