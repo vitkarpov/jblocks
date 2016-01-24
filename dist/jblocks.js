@@ -117,7 +117,7 @@ Block.prototype.destroy = function() {
  * @return {string}
  */
 Block.prototype._getEventName = function(name) {
-    return this.id + ':' + name;
+    return this._id + ':' + name;
 };
 
 module.exports = Block;
