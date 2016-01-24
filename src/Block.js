@@ -80,6 +80,10 @@ Block.prototype._addEvents = function() {
     }
 };
 
+Block.prototype._isInnerEvent = function(id) {
+    return ['b-inited', 'b-destroyed'].indexOf(id) > -1;
+};
+
 /**
  * Mark the block as inited
  */
