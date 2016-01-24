@@ -129,7 +129,7 @@ describe('jblocks', function() {
             });
         });
         describe('declaration', function() {
-            it('should add event to the block`s node if selector is not specified', function() {
+            it('should add event if selector is not specified', function() {
                 var block = $('.foo').jblocks('get')[0];
                 var called = false;
 
@@ -139,6 +139,19 @@ describe('jblocks', function() {
                 block.$node.click();
 
                 called.should.be.ok();
+            });
+            it('should call b-inited event', function() {
+                var block1 = $('.foo').jblocks('get')[0];
+                var block2 = $('.bar').jblocks('get')[0];
+                var calledTimes = 0;
+
+                block1.on('inited', function() {
+                    calledTimes++;
+                });
+                block2.on('inited', function() {
+                    calledTimes++;
+                    calledTimes.should.be.eql(2);
+                });
             });
         });
     });
