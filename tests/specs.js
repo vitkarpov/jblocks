@@ -2,7 +2,7 @@ var html = [
     '<div class="js-foo-1" data-component="counter" data-props=\'{ "step": 1 }\'></div>',
     '<div class="js-foo-2" data-component="counter" data-props=\'{ "step": 2 }\'></div>',
     '<div class="js-bar" data-component="bar"></div>',
-    '<div class="js-baz" data-component="baz"></div>'
+    '<div class="js-baz" data-component="baz"><span class="foo"></span></div>'
 ].join();
 
 describe('jblocks', function() {
@@ -31,7 +31,20 @@ describe('jblocks', function() {
                 }
             }
         });
-        jBlocks.define('baz');
+        jBlocks.define('baz', {
+            events: {
+                'click': 'onClickSelf',
+                'click .foo': 'onClickFoo'
+            },
+            methods: {
+                onClickSelf: function() {
+                    this.clickedOnSelf = true;
+                },
+                onClickFoo: function() {
+                    this.clickedOnFoo = true;
+                }
+            }
+        });
     });
     afterEach(function() {
         this.app.innerHTML = '';
@@ -127,6 +140,11 @@ describe('jblocks', function() {
                     fired = true;
                 });
                 fired.should.eql(true);
+            });
+        });
+        describe('events section', function() {
+            it('should handle dom events', function() {
+
             });
         });
     });
