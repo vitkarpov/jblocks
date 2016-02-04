@@ -1,82 +1,81 @@
 var html = [
-    '<div class="js-foo-1" data-component="counter" data-props=\'{ "step": 1 }\'></div>',
-    '<div class="js-foo-2" data-component="counter" data-props=\'{ "step": 2 }\'></div>',
+    '<div class="js-foo-1" data-component="foo" data-props=\'{ "step": 1 }\'></div>',
+    '<div class="js-foo-2" data-component="foo" data-props=\'{ "step": 2 }\'></div>',
     '<div class="js-bar" data-component="bar"></div>',
     '<div class="js-baz" data-component="baz"><span class="foo"></span></div>'
 ].join();
+
+jBlocks.define('foo', {
+    methods: {
+        oninit: function() {
+            this.inited = true;
+        },
+        ondestroy: function() {
+            this.inited = false;
+        }
+    }
+});
+jBlocks.define('bar', {
+    methods: {
+        oninit: function() {
+            var baz = jBlocks.get(document.querySelector('.js-baz'))
+            baz.on('my-custom-event', this.onBazEventFired.bind(this));
+        },
+        onBazEventFired: function() {
+            this.hasCatchedEventFromBaz = true;
+        }
+    }
+});
+jBlocks.define('baz', {
+    events: {
+        'click': 'onClickSelf',
+        'click .foo': 'onClickFoo'
+    },
+    methods: {
+        onClickSelf: function() {
+            this.clickedOnSelf = true;
+        },
+        onClickFoo: function() {
+            this.clickedOnBaz = true;
+        }
+    }
+});
 
 describe('jblocks', function() {
     beforeEach(function() {
         this.app = document.getElementById('app');
         this.app.innerHTML = html;
-
-        jBlocks.define('foo', {
-            methods: {
-                oninit: function() {
-                    this.inited = true;
-                },
-                ondestroy: function() {
-                    this.inited = false;
-                }
-            }
-        });
-        jBlocks.define('bar', {
-            methods: {
-                oninit: function() {
-                    var baz = jBlocks.get(document.querySelector('.js-baz'))
-                    baz.on('my-custom-event', this.onBazEventFired.bind(this));
-                },
-                onBazEventFired: function() {
-                    this.hasCatchedEventFromBaz = true;
-                }
-            }
-        });
-        jBlocks.define('baz', {
-            events: {
-                'click': 'onClickSelf',
-                'click .foo': 'onClickFoo'
-            },
-            methods: {
-                onClickSelf: function() {
-                    this.clickedOnSelf = true;
-                },
-                onClickFoo: function() {
-                    this.clickedOnBaz = true;
-                }
-            }
-        });
     });
     afterEach(function() {
         this.app.innerHTML = '';
-
-        [].forEach.call(document.querySelector('[data-component]'), function(node) {
-            var instance = jBlocks.get(node);
-            var name = instance.name;
-            instance.destroy();
-            jBlocks.forget(name);
-        });
     });
 
     describe('#get', function() {
         it('should create and return an instance', function() {
             var instance = jBlocks.get(document.querySelector('.js-bar'));
 
-            instance.should.be.an.instanceOf(jBlocks);
-            instance.name.should.eql('bar')
+            instance.name.should.eql('bar');
         });
     });
     describe('#destroy', function() {
+        beforeEach(function() {
+            this.node = document.querySelector('.js-bar');
+            this.instance = jBlocks.get(this.node);
+            this.oldId = this.instance.__id;
+        });
         it('should destroy an instance binded to node', function() {
-            var instance = jBlocks.get(document.querySelector('.js-bar'));
+            jBlocks.destroy(this.node);
+            var instance = jBlocks.get(this.node);
+            var newId = instance.__id;
 
-            jBlocks.destroy(node);
-            instance.should.eql(null);
+            newId.should.not.eql(this.oldId);
         });
         it('should destroy an instance called on itself', function() {
-            var instance = jBlocks.get(document.querySelector('.js-bar'));
+            this.instance.destroy();
+            var instance = jBlocks.get(this.node);
+            var newId = instance.__id;
 
-            instance.destroy();
-            instance.should.eql(null);
+            newId.should.not.eql(this.oldId);
         });
     });
     describe('#define', function() {
@@ -84,9 +83,12 @@ describe('jblocks', function() {
             this.app.innerHTML += '<div class="js-mega-component" data-component="mega-component"></div>';
             jBlocks.define('mega-component');
         });
+        afterEach(function() {
+            jBlocks.forget('mega-component');
+        })
         it('should decl a new component', function() {
             var instance = jBlocks.get(document.querySelector('.js-mega-component'));
-            instance.should.be.an.instanceOf(jBlocks);
+            instance.name.should.eql('mega-component');
         });
         it('should throw an error if component has been already declared', function() {
             try {
@@ -99,9 +101,14 @@ describe('jblocks', function() {
     describe('#forget', function() {
         it('should remove existing declaration', function() {
             jBlocks.forget('bar');
+            var catched = false;
 
-            var instance = jBlocks.get(document.querySelector('.js-bar'))
-            instance.should.eql(null);
+            try {
+                jBlocks.define('bar')
+            } catch(e) {
+                catched = true;
+            }
+            catched.should.be.eql(false);
         });
     });
     describe('#lifecycle', function() {
@@ -143,7 +150,7 @@ describe('jblocks', function() {
             });
         });
         describe('events section', function() {
-            define('should handle dom events', function() {
+            describe('should handle dom events', function() {
                 it('on specified inner element', function() {
                     var baz = jBlocks.get(document.querySelector('.js-baz'));
                     document.querySelector('.js-baz .foo').click();
