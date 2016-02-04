@@ -1,8 +1,8 @@
 var html = [
-    '<div class="js-foo" data-b="counter" data-p=\'{ "step": 2 }\'></div>',
-    '<div class="js-foo" data-b="counter" data-p=\'{ "step": 1 }\'></div>',
-    '<div class="js-bar" data-b="bar"></div>',
-    '<div class="js-baz" data-b="baz"></div>'
+    '<div class="js-foo-1" data-component="counter" data-props=\'{ "step": 1 }\'></div>',
+    '<div class="js-foo-2" data-component="counter" data-props=\'{ "step": 2 }\'></div>',
+    '<div class="js-bar" data-component="bar"></div>',
+    '<div class="js-baz" data-component="baz"></div>'
 ].join();
 
 describe('jblocks', function() {
@@ -11,10 +11,6 @@ describe('jblocks', function() {
         this.app.innerHTML = html;
 
         jBlocks.define('foo', {
-            events: {
-                'b-inited': 'oninit',
-                'b-destroyed': 'ondestroy'
-            },
             methods: {
                 oninit: function() {
                     this.inited = true;
@@ -25,9 +21,6 @@ describe('jblocks', function() {
             }
         });
         jBlocks.define('bar', {
-            events: {
-                'b-inited': 'oninit'
-            },
             methods: {
                 oninit: function() {
                     var baz = jBlocks.get(document.querySelector('.js-baz'))
@@ -43,7 +36,7 @@ describe('jblocks', function() {
     afterEach(function() {
         this.app.innerHTML = '';
 
-        [].forEach.call(document.querySelector('[data-b]'), function(node) {
+        [].forEach.call(document.querySelector('[data-component]'), function(node) {
             var instance = jBlocks.get(node);
             var name = instance.name;
             instance.destroy();
@@ -75,11 +68,8 @@ describe('jblocks', function() {
     });
     describe('#define', function() {
         beforeEach(function() {
-            this.app.innerHTML += '<div class="js-mega-component" data-b="mega-component"></div>';
+            this.app.innerHTML += '<div class="js-mega-component" data-component="mega-component"></div>';
             jBlocks.define('mega-component');
-        });
-        afterEach(function() {
-            jBlocks.forget('mega-component');
         });
         it('should decl a new component', function() {
             var instance = jBlocks.get(document.querySelector('.js-mega-component'));
@@ -101,15 +91,15 @@ describe('jblocks', function() {
             instance.should.eql(null);
         });
     });
-    describe('#events', function() {
-        describe('b-inited', function() {
+    describe('#lifecycle', function() {
+        describe('oninit', function() {
             it('should be called when a new instance created', function() {
                 var instance = jBlocks.get(document.querySelector('.js-bar'));
 
                 instance.inited.should.eql(true);
             });
         });
-        describe('b-destroyed', function() {
+        describe('ondestroy', function() {
             it('should be called when a new instance destroyed', function() {
                 var instance = jBlocks.get(document.querySelector('.js-bar'));
 
@@ -117,6 +107,8 @@ describe('jblocks', function() {
                 instance.inited.should.eql(false);
             });
         });
+    });
+    describe('#events', function() {
         describe('emit', function() {
             it('should emit a new event for all subscribers', function() {
                 var instanceBar = jBlocks.get(document.querySelector('.js-bar'));
@@ -138,5 +130,13 @@ describe('jblocks', function() {
             });
         });
     });
+    describe('#props', function() {
+        it('should be attached to the instance', function() {
+            var foo1 = jBlocks.get(document.querySelector('.js-foo-1'));
+            var foo2 = jBlocks.get(document.querySelector('.js-foo-2'));
 
+            foo1.props.step.should.eql(1);
+            foo2.props.step.should.eql(2);
+        });
+    });
 });
