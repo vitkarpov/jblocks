@@ -1,172 +1,142 @@
 var html = [
-    '<div class="foo" data-b="counter" data-p=\'{ "step": 2 }\'>',
-    '<button class="js-inc">+</button>',
-    '<button class="js-dec">-</button>',
-    '<span class="js-info">0</span>',
-    '</div>',
-    '<div class="bar" data-b="bar"></div>'
+    '<div class="js-foo" data-b="counter" data-p=\'{ "step": 2 }\'></div>',
+    '<div class="js-foo" data-b="counter" data-p=\'{ "step": 1 }\'></div>',
+    '<div class="js-bar" data-b="bar"></div>',
+    '<div class="js-baz" data-b="baz"></div>'
 ].join();
 
 describe('jblocks', function() {
     beforeEach(function() {
-        this.$html = $(html);
-        this.$html.appendTo(document.body);
+        this.app = document.getElementById('app');
+        this.app.innerHTML = html;
+
+        jBlocks.define('foo', {
+            events: {
+                'b-inited': 'oninit',
+                'b-destroyed': 'ondestroy'
+            },
+            methods: {
+                oninit: function() {
+                    this.inited = true;
+                },
+                ondestroy: function() {
+                    this.inited = false;
+                }
+            }
+        });
+        jBlocks.define('bar', {
+            events: {
+                'b-inited': 'oninit'
+            },
+            methods: {
+                oninit: function() {
+                    var baz = jBlocks.get(document.querySelector('.js-baz'))
+                    baz.on('my-custom-event', this.onBazEventFired.bind(this));
+                },
+                onBazEventFired: function() {
+                    this.hasCatchedEventFromBaz = true;
+                }
+            }
+        });
+        jBlocks.define('baz');
     });
     afterEach(function() {
-        this.$html.remove();
-    });
+        this.app.innerHTML = '';
 
-    describe('#getBlocks', function() {
-        it('should return jquery collection of blocks instances', function() {
-            $('.foo').jblocks('get').each(function() {
-                this.should.be.an.instanceOf($.Block);
-            });
-        });
-
-        describe('when block is not defined', function() {
-            beforeEach(function() {
-                this.$unknown = $('<div class="bar" data-b="unknow"></div>');
-                this.$unknown.appendTo(document.body);
-            });
-            afterEach(function() {
-                this.$unknown.remove();
-            });
-
-            it('should throw an error', function() {
-                try {
-                    $('.bar').jblocks('get');
-                } catch(e) {
-                    e.should.be.ok();
-                }
-            });
+        [].forEach.call(document.querySelector('[data-b]'), function(node) {
+            var instance = jBlocks.get(node);
+            var name = instance.name;
+            instance.destroy();
+            jBlocks.forget(name);
         });
     });
 
-    describe('#find', function() {
-        it('should find blocks inside', function() {
-            $(document).jblocks('find').each(function() {
-                this.should.be.an.instanceOf($.Block);
-            });
-        });
-        it('should use filter as second arg', function() {
-            var blocks = $(document).jblocks('find', 'counter');
-            blocks.length.should.be.eql(1);
+    describe('#get', function() {
+        it('should create and return an instance', function() {
+            var instance = jBlocks.get(document.querySelector('.js-bar'));
+
+            instance.should.be.an.instanceOf(jBlocks);
+            instance.name.should.eql('bar')
         });
     });
+    describe('#destroy', function() {
+        it('should destroy an instance binded to node', function() {
+            var instance = jBlocks.get(document.querySelector('.js-bar'));
 
-    describe('#initBlocks', function() {
-        it('should init blocks', function() {
-            $(document).jblocks('init');
-            $('.foo').hasClass('jb-inited').should.be.true;
+            jBlocks.destroy(node);
+            instance.should.eql(null);
+        });
+        it('should destroy an instance called on itself', function() {
+            var instance = jBlocks.get(document.querySelector('.js-bar'));
+
+            instance.destroy();
+            instance.should.eql(null);
         });
     });
-
-    describe('#destroyBlocks', function() {
-        it('should destroy blocks', function() {
-            $(document).jblocks('destroy');
-            $('.foo').hasClass('jb-inited').should.be.false;
+    describe('#define', function() {
+        beforeEach(function() {
+            this.app.innerHTML += '<div class="js-mega-component" data-b="mega-component"></div>';
+            jBlocks.define('mega-component');
+        });
+        afterEach(function() {
+            jBlocks.forget('mega-component');
+        });
+        it('should decl a new component', function() {
+            var instance = jBlocks.get(document.querySelector('.js-mega-component'));
+            instance.should.be.an.instanceOf(jBlocks);
+        });
+        it('should throw an error if component has been already declared', function() {
+            try {
+                jBlocks.define('foo')
+            } catch(e) {
+                e.should.be.ok();
+            }
         });
     });
+    describe('#forget', function() {
+        it('should remove existing declaration', function() {
+            jBlocks.forget('bar');
 
+            var instance = jBlocks.get(document.querySelector('.js-bar'))
+            instance.should.eql(null);
+        });
+    });
     describe('#events', function() {
+        describe('b-inited', function() {
+            it('should be called when a new instance created', function() {
+                var instance = jBlocks.get(document.querySelector('.js-bar'));
+
+                instance.inited.should.eql(true);
+            });
+        });
+        describe('b-destroyed', function() {
+            it('should be called when a new instance destroyed', function() {
+                var instance = jBlocks.get(document.querySelector('.js-bar'));
+
+                instance.destroy();
+                instance.inited.should.eql(false);
+            });
+        });
+        describe('emit', function() {
+            it('should emit a new event for all subscribers', function() {
+                var instanceBar = jBlocks.get(document.querySelector('.js-bar'));
+                var instanceBaz = jBlocks.get(document.querySelector('.js-baz'));
+
+                instanceBaz.emit('my-custom-event');
+                instanceBar.hasCatchedEventFromBaz.should.eql(true);
+            });
+        });
         describe('on', function() {
-            it('should attach a handler', function() {
-                var called = false;
-                var block = $('.foo').jblocks('get')[0];
+            it('should subsribe component for an event', function() {
+                var instance = jBlocks.get(document.querySelector('.js-bar'));
+                var fired = false;
 
-                block.on('inc', function() {
-                    called = true;
+                instance.on('b-inited', function() {
+                    fired = true;
                 });
-                block.inc();
-
-                called.should.be.ok();
-            });
-        });
-        describe('off', function() {
-            it('should remove the spicific handler', function() {
-                var called = false;
-                var block = $('.foo').jblocks('get')[0];
-
-                var handler = function() {
-                    called = true;
-                };
-
-                block.on('inc', handler);
-                block.off('inc', handler);
-                block.inc();
-
-                called.should.be.not.ok();
-            });
-            it('should remove all handlers if second arg is not defined', function() {
-                var called = 0;
-                var block = $('.foo').jblocks('get')[0];
-
-                block.on('inc', function() {
-                    called++
-                });
-                block.on('inc', function() {
-                    called++
-                });
-                block.off('inc');
-                block.inc();
-
-                called.should.be.eql(0);
-            });
-            it('should remove all events if there are no args defined', function() {
-                var called = 0;
-                var block = $('.foo').jblocks('get')[0];
-
-                block.on('inc', function() {
-                    called++
-                });
-                block.on('dec', function() {
-                    called++
-                });
-                block.off();
-                block.inc();
-
-                called.should.be.eql(0);
-            });
-        });
-        describe('declaration', function() {
-            it('should add event if selector is not specified', function() {
-                var block = $('.foo').jblocks('get')[0];
-                var called = false;
-
-                block.on('clicked', function() {
-                    called = true;
-                });
-                block.$node.click();
-
-                called.should.be.ok();
-            });
-            it('should call b-inited event', function() {
-                var block1 = $('.foo').jblocks('get')[0];
-                var block2 = $('.bar').jblocks('get')[0];
-                var calledTimes = 0;
-
-                block1.on('inited', function() {
-                    calledTimes++;
-                });
-                block2.on('inited', function() {
-                    calledTimes++;
-                    calledTimes.should.be.eql(2);
-                });
+                fired.should.eql(true);
             });
         });
     });
 
-    describe('Block', function() {
-        it('should have params declared in html', function() {
-            $('.foo').jblocks('get').each(function() {
-                this.params.should.eql({ step: 2 });
-            });
-        });
-
-        it('should have declared methods', function() {
-            $('.foo').jblocks('get').each(function() {
-                this.inc.should.be.a.Function;
-            });
-        });
-    });
 });

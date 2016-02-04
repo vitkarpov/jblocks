@@ -5,7 +5,6 @@
     <title>JBlocks Tests</title>
     <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
 
-    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="../node_modules/should/should.js"></script>
     <script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
 
@@ -16,79 +15,7 @@
 </head>
 <body>
     <div id="mocha"></div>
-
-    <script type="text/javascript">
-        $.jblocks({
-            name: 'bar',
-            events: {
-                'b-inited': 'oninit'
-            },
-            methods: {
-                oninit: function() {
-                    this.emit('inited');
-                }
-            }
-        });
-        $.jblocks({
-            name: 'counter',
-            events: {
-                'b-inited': 'oninit',
-                'click': 'onClickSelf',
-                'click .js-inc': 'onClickPlus',
-                'click .js-dec': 'onClickMinus'
-            },
-            methods: {
-                oninit: function() {
-                    this.$info = this.$node.find('.js-info');
-                    this.count = 0;
-                    this.emit('inited');
-                },
-
-                onClickSelf: function() {
-                    this.emit('clicked');
-                },
-
-                /**
-                 * Обработчик клика на плюс
-                 */
-                onClickPlus: function() {
-                    this.inc();
-                    this.update();
-                },
-
-                /**
-                 * Обработчик клика на минус
-                 */
-                onClickMinus: function() {
-                    this.dec();
-                    this.update();
-                },
-
-                /**
-                 * Увеличить счетчик
-                 */
-                inc: function() {
-                    this.count += this.params.step;
-                    this.emit('inc', 'foo');
-                },
-
-                /**
-                 * Уменьшить счетчик
-                 */
-                dec: function() {
-                    this.count -= this.params.step;
-                    this.emit('dec', 'bar');
-                },
-
-                /**
-                 * Нарисует новое значение
-                 */
-                update: function() {
-                    this.$info.text(this.count);
-                }
-            }
-        });
-    </script>
+    <div id="app"></div>
     <script type="text/javascript" src="tests.js"></script>
     <script type="text/javascript">
         mocha.run();
