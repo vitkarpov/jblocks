@@ -41,7 +41,7 @@ describe('jblocks', function() {
                     this.clickedOnSelf = true;
                 },
                 onClickFoo: function() {
-                    this.clickedOnFoo = true;
+                    this.clickedOnBaz = true;
                 }
             }
         });
@@ -143,8 +143,21 @@ describe('jblocks', function() {
             });
         });
         describe('events section', function() {
-            it('should handle dom events', function() {
+            define('should handle dom events', function() {
+                it('on specified inner element', function() {
+                    var baz = jBlocks.get(document.querySelector('.js-baz'));
+                    document.querySelector('.js-baz .foo').click();
 
+                    baz.clickedOnBaz.should.eql(true);
+                    baz.clickedOnSelf.should.eql(false);
+                });
+                it('on root element', function() {
+                    var baz = jBlocks.get(document.querySelector('.js-baz'));
+                    document.querySelector('.js-baz').click();
+
+                    baz.clickedOnBaz.should.eql(false);
+                    baz.clickedOnSelf.should.eql(true);
+                });
             });
         });
     });
