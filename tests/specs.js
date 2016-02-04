@@ -2,7 +2,7 @@ var html = [
     '<div class="js-foo-1" data-component="foo" data-props=\'{ "step": 1 }\'></div>',
     '<div class="js-foo-2" data-component="foo" data-props=\'{ "step": 2 }\'></div>',
     '<div class="js-bar" data-component="bar"></div>',
-    '<div class="js-baz" data-component="baz"><span class="foo"></span></div>'
+    '<div class="js-baz" data-component="baz"><span class="foo"></span><span class="bar"><span class="bar-inner"></span></div>'
 ].join();
 
 jBlocks.define('foo', {
@@ -18,25 +18,25 @@ jBlocks.define('foo', {
 jBlocks.define('bar', {
     methods: {
         oninit: function() {
-            var baz = jBlocks.get(document.querySelector('.js-baz'))
-            baz.on('my-custom-event', this.onBazEventFired.bind(this));
-        },
-        onBazEventFired: function() {
-            this.hasCatchedEventFromBaz = true;
+            this.emit('inited', 'hello, world!');
         }
     }
 });
 jBlocks.define('baz', {
     events: {
         'click': 'onClickSelf',
-        'click .foo': 'onClickFoo'
+        'click .foo': 'onClickFoo',
+        'click .bar': 'onClickBar'
     },
     methods: {
         onClickSelf: function() {
             this.clickedOnSelf = true;
         },
         onClickFoo: function() {
-            this.clickedOnBaz = true;
+            this.clickedOnFoo = true;
+        },
+        onClickBar: function() {
+            this.clickedOnBar = true;
         }
     }
 });
@@ -113,15 +113,15 @@ describe('jblocks', function() {
     });
     describe('#lifecycle', function() {
         describe('oninit', function() {
-            it('should be called when a new instance created', function() {
-                var instance = jBlocks.get(document.querySelector('.js-bar'));
+            it('should be called when new instance has been created', function() {
+                var instance = jBlocks.get(document.querySelector('.js-foo-1'));
 
                 instance.inited.should.eql(true);
             });
         });
         describe('ondestroy', function() {
-            it('should be called when a new instance destroyed', function() {
-                var instance = jBlocks.get(document.querySelector('.js-bar'));
+            it('should be called when a new instance has been destroyed', function() {
+                var instance = jBlocks.get(document.querySelector('.js-foo-1'));
 
                 instance.destroy();
                 instance.inited.should.eql(false);
@@ -134,37 +134,43 @@ describe('jblocks', function() {
                 var instanceBar = jBlocks.get(document.querySelector('.js-bar'));
                 var instanceBaz = jBlocks.get(document.querySelector('.js-baz'));
 
-                instanceBaz.emit('my-custom-event');
-                instanceBar.hasCatchedEventFromBaz.should.eql(true);
+                instanceBar.on('my-custon-event', function(data) {
+                    data.a.should.eql(2);
+                });
+                instanceBaz.emit('my-custom-event', {
+                    a: 2
+                });
             });
         });
         describe('on', function() {
             it('should subsribe component for an event', function() {
                 var instance = jBlocks.get(document.querySelector('.js-bar'));
-                var fired = false;
 
-                instance.on('b-inited', function() {
-                    fired = true;
+                instance.on('inited', function(data) {
+                    data.should.eql('hello, world!');
                 });
-                fired.should.eql(true);
             });
         });
         describe('events section', function() {
             describe('should handle dom events', function() {
-                it('on specified inner element', function() {
-                    var baz = jBlocks.get(document.querySelector('.js-baz'));
-                    document.querySelector('.js-baz .foo').click();
-
-                    baz.clickedOnBaz.should.eql(true);
-                    baz.clickedOnSelf.should.eql(false);
-                });
-                it('on root element', function() {
+                it('for root element', function() {
                     var baz = jBlocks.get(document.querySelector('.js-baz'));
                     document.querySelector('.js-baz').click();
 
-                    baz.clickedOnBaz.should.eql(false);
                     baz.clickedOnSelf.should.eql(true);
                 });
+                it('for the specifying element', function() {
+                    var baz = jBlocks.get(document.querySelector('.js-baz'));
+                    document.querySelector('.js-baz .foo').click();
+
+                    baz.clickedOnFoo.should.eql(true);
+                });
+                it('for element inside the specifying one', function() {
+                    var baz = jBlocks.get(document.querySelector('.js-baz'));
+                    document.querySelector('.js-baz .bar-inner').click();
+
+                    baz.clickedOnBar.should.eql(true);
+                })
             });
         });
     });
