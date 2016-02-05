@@ -1,6 +1,6 @@
 {
   "name": "jblocks",
-  "version": "0.3.6",
+  "version": "1.0.0",
   "description": "Nanoframework for creating UI-components",
   "author": "Vit Karpov <viktor.s.karpov@gmail.com>",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "mocha": "^2.3.3",
     "should": "^7.1.0"
   },
-  "main": "jBlocks.js",
+  "main": "src/jblocks.js",
   "directories": {
     "test": "tests"
   },
