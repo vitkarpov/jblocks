@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>DocStrap Index</title>
+	<title>DocStrap Classes</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -70,112 +70,102 @@
 		<div id="main">
 			
 
+	<h1 class="page-title">Classes</h1>
+<section>
+
+<header>
+    
+        <h2>
+        
+        </h2>
+        
+    
+</header>
+
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+<dl class="details">
+    
+
 	
+
+	
+
+	
+
+    
+
+    
+
+    
+
+    
+
+	
+
+	
+
+	
+
+	
+
 	
 
 
 
-
-
-
-
-
-
-
-
-	
 	
 
+	
+
+	
+
+	
+</dl>
 
 
+        
+    
+    </div>
 
+    
 
-    <section class="readme-section">
-        <article><h1>JBlocks</h1><p><a href="http://badge.fury.io/js/jblocks"><img src="https://badge.fury.io/js/jblocks.png" alt="NPM version"></a>
-<a href="https://travis-ci.org/vitkarpov/jblocks"><img src="https://travis-ci.org/vitkarpov/jblocks.png?branch=master" alt="Build Status"></a></p>
-<p><strong><a href="https://vitkarpov.com/jblocks">API Doc</a></strong></p>
-<p>JBlocks helps to create interface components in a functional programming flavor.</p>
-<p>It's build on the following simple rules:</p>
-<ul>
-<li>declare your components</li>
-<li>set <code>data-component</code> and <code>data-params</code> attributes in HTML to mark components</li>
-<li>interact between components using API and events</li>
-</ul>
-<p>Let we have a simple component: counter with 2 buttons to increase and decrease its value. It could be a lot of independent counters on a page with different initials values.</p>
-<p>Using JBlocks we have to declare a component in javascript and mark some nodes in html using special data-attributes.</p>
-<h2>How to declare a component</h2><p>Include the library:</p>
-<pre class="prettyprint source lang-html"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;https://cdn.rawgit.com/vitkarpov/jblocks/master/src/jblocks.js&quot;>&lt;/script></code></pre><p>Declare a component:</p>
-<pre class="prettyprint source lang-js"><code>jBlocks.define('counter', {
-    events: {
-        'click .js-inc': 'inc',
-        'click .js-dec': 'dec'
-    },
+    
 
-    methods: {
-        oninit: function() {
-            this._currentValue = Number(this.params.initialValue);
-        },
-        ondestroy: function() {
-            this._currentValue = null;
-        },
-        /**
-         * Increases the counter, emits changed event
-         */
-        inc: function() {
-            this._currentValue++;
-            this.emit('changed', this._currentValue);
-        },
-        /**
-         * Decreases the counter, emits changed event
-         */
-        dec: function() {
-            this._currentValue--;
-            this.emit('changed', this._currentValue);
-        },
-        /**
-         * Returns the current value
-         * @return {Number}
-         */
-        getCurrentValue: function() {
-            return this._currentValue;
-        }
-    }
-})</code></pre><h2>How to mark components in html</h2><p>To make some node as a root node of the component we should set special <code>data</code> attributes:</p>
-<ul>
-<li><code>data-component</code> — name of the given component (<code>counter</code> in this case)</li>
-<li><code>data-props</code> — initial properties (<code>{ &quot;initialValue&quot;: 10 }</code> in this case)</li>
-</ul>
-<pre class="prettyprint source lang-html"><code>&lt;div class=&quot;js-counter&quot; data-component=&quot;сounter&quot; data-props='{ &quot;initialValue&quot;: 2 }'>
-    &lt;button class=&quot;js-inc&quot;>+&lt;/button>
-    &lt;button class=&quot;js-dec&quot;>-&lt;/button>
-&lt;/div></code></pre><h2>How to create an instance and interact with it</h2><p>After describing all the components in declarative way it's time to create some instances and interact with them using API:</p>
-<pre class="prettyprint source lang-js"><code>// somewhere in my program...
+    
+        <h3 class="subsection-title">Classes</h3>
 
-var counter = jBlocks.get(document.querySelector('.js-counter'));
+        <dl>
+            <dt><a href="jBlocks.Component.html">Component</a></dt>
+            <dd></dd>
+        </dl>
+    
 
-// use event to react on what happens during lifecycle
-counter.on('changed', function() {
-    console.log('hello, world!');
-});
+    
 
-// ... when user clicks on inc button
-// log => 'hello, world!'
+    
+        <h3 class="subsection-title">Namespaces</h3>
 
-// log => 3, cause the counter has been increased
-counter.getCurrentValue();
+        <dl>
+            <dt><a href="namespaces.html#jBlocks"><a href="jBlocks.html">jBlocks</a></a></dt>
+            <dd></dd>
+        </dl>
+    
 
-// ... then I decided to decrease it using API
-counter.dec();
+    
 
-// log => 2
-counter.getCurrentValue();
+    
 
-// If I remove nodes from DOM instance should be destroyed
-counter.destroy();</code></pre><p><strong><a href="https://vitkarpov.com/jblocks">API Doc</a></strong></p></article>
-    </section>
+    
 
+    
+</article>
 
-
+</section>
 
 
 

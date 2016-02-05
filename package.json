@@ -20,7 +20,7 @@
   },
   "scripts": {
     "test": "node node_modules/.bin/gulp test",
-    "doc": "./node_modules/.bin/jsdoc ./jBlocks.js -t ./node_modules/ink-docstrap/template -c ./jsdoc.json -d doc -R README.md"
+    "doc": "./node_modules/.bin/jsdoc ./src/jblocks.js -t ./node_modules/ink-docstrap/template -c ./jsdoc.json -d doc -R README.md"
   },
   "repository": {
     "type": "git",
