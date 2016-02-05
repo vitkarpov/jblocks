@@ -5,7 +5,7 @@
 
 **[API Doc](https://vitkarpov.com/jblocks)**
 
-JBlocks helps to create interface components in a functional programming flavor.
+JBlocks helps to create interface components in a functional programming flavour.
 
 It's build on the following simple rules:
 
