@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JBlocks Tests</title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+
+    <script type="text/javascript" src="../node_modules/should/should.js"></script>
+    <script type="text/javascript" src="../node_modules/mocha/mocha.js"></script>
+
+    <script type="text/javascript" src="../src/jblocks.js"></script>
+    <script type="text/javascript">
+        mocha.setup('bdd');
+    </script>
+</head>
+<body>
+    <div id="mocha"></div>
+    <div id="app"></div>
+    <script type="text/javascript">
+        // Phantom doesn't know click
+        if (!HTMLElement.prototype.click) {
+            HTMLElement.prototype.click = function() {
+                var ev = document.createEvent('MouseEvent');
+                ev.initMouseEvent(
+                    'click',
+                    true, true,
+                    window, null,
+                    0, 0, 0, 0,
+                    false, false, false, false,
+                    0, null
+                );
+                this.dispatchEvent(ev);
+            };
+        }
+    </script>
+    <script type="text/javascript" src="specs.js"></script>
+    <script type="text/javascript">
+        mocha.run();
+    </script>
+</body>
+</html>
