@@ -8,7 +8,7 @@ var jBlocks = (function() {
      * @namespace
      * @name jBlocks
      * @description
-     * jBlocks containts static methods to define components
+     * Methods to define components
      * using declaration and create new instances.
      * Also helps to find and destroy components.
      */
@@ -84,7 +84,6 @@ var jBlocks = (function() {
     };
 
     /**
-     * Create a new instance of component
      * @class
      * @memberof jBlocks
      * @param {HTMLElement} node
@@ -125,7 +124,7 @@ var jBlocks = (function() {
      */
     {
         /**
-         * Subscribe component to the event
+         * Attach an event handler function for the given event
          * @param  {String}   event
          * @param  {Function} callback
          * @return {jBlocks.Component}
@@ -140,7 +139,7 @@ var jBlocks = (function() {
         },
 
         /**
-         * Unsubscribe component of the event
+         * Remove an event handler function for the given event
          * @param  {String}   event
          * @param  {Function} callback
          * @return {jBlocks.Component}
@@ -159,7 +158,7 @@ var jBlocks = (function() {
         },
 
         /**
-         * Emit specified event so subscribers can respond
+         * Execute all handlers attached for the given event
          * @param  {String} event
          * @param  {*} data
          * @return {jBlocks.Component}
@@ -183,7 +182,7 @@ var jBlocks = (function() {
         },
 
         /**
-         * Destroy the component
+         * Destroy the instance
          * @return {jBlocks.Component}
          */
         destroy: function() {
