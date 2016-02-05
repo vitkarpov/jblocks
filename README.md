@@ -17,7 +17,7 @@ Let we have a simple component: counter with 2 buttons to increase and decrease 
 
 Using JBlocks we have to declare a component in javascript and mark some nodes in html using special data-attributes.
 
-## How to declare a component
+## Declare a component in JavaScript
 
 Include the library:
 
@@ -66,7 +66,7 @@ jBlocks.define('counter', {
 })
 ```
 
-## How to mark components in html
+## Declare a component in HTML
 
 To make some node as a root node of the component we should set special `data` attributes:
 
@@ -80,9 +80,9 @@ To make some node as a root node of the component we should set special `data` a
 </div>
 ```
 
-## How to create an instance and interact with it
+## Create instances and interact with them
 
-After describing all the components in declarative way it's time to create some instances and interact with them using API:
+After describing all components in declarative way it's time to create an instance and interact with it using API:
 
 ```js
 // somewhere in my program...
