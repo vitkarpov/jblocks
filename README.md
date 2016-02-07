@@ -1,29 +1,27 @@
-# JBlocks
+# jBlocks
 
 [![NPM version](https://badge.fury.io/js/jblocks.png)](http://badge.fury.io/js/jblocks)
 [![Build Status](https://travis-ci.org/vitkarpov/jblocks.png?branch=master)](https://travis-ci.org/vitkarpov/jblocks)
 
-**[API Doc](https://vitkarpov.com/jblocks)**
+**[Full API Doc created from source](https://vitkarpov.com/jblocks)**
 
-JBlocks helps to create interface components in a functional programming flavour.
+jBlocks helps to create interface components in a functional programming flavour.
 
 It's build on the following simple rules:
 
 - declare your components
-- set `data-component` and `data-params` attributes in HTML to mark components
-- interact between components using API and events
+- set `data-component` and `data-props` attributes in HTML to bind an instance of the component (will be created in the future) to the node
+- interact with components using API, events and other components
 
-Let we have a simple component: counter with 2 buttons to increase and decrease its value. It could be a lot of independent counters on a page with different initials values.
+## Give me an example
 
-Using JBlocks we have to declare a component in javascript and mark some nodes in html using special data-attributes.
+Let we have a simple component.
+
+Counter with 2 buttons to increase and decrease its value. It could be a lot of independent counters on a page with different initials values.
+
+At first we need to declare a component in JavaScript and then mark some nodes in HTML using special data-attributes.
 
 ## Declare a component in JavaScript
-
-Include the library:
-
-```html
-<script type="text/javascript" src="https://cdn.rawgit.com/vitkarpov/jblocks/master/src/jblocks.js"></script>
-```
 
 Declare a component:
 
@@ -110,4 +108,17 @@ counter.getCurrentValue();
 counter.destroy();
 ```
 
-**[API Doc](https://vitkarpov.com/jblocks)**
+## How do I start?
+
+
+Include the library:
+
+```html
+<script type="text/javascript" src="https://cdn.rawgit.com/vitkarpov/jblocks/master/src/jblocks.js"></script>
+```
+
+`jBlocks` namespace is now in global scope. If you need commonjs support, let me know.
+
+You can use the **[full API Doc generated from source](https://vitkarpov.com/jblocks)**.
+
+Also, feel free to drop me a line — [viktor.s.karpov@gmail.com](mailto:viktor.s.karpov@gmail.com)
