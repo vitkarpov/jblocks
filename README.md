@@ -3,14 +3,14 @@
 [![NPM version](https://badge.fury.io/js/jblocks.png)](http://badge.fury.io/js/jblocks)
 [![Build Status](https://travis-ci.org/vitkarpov/jblocks.png?branch=master)](https://travis-ci.org/vitkarpov/jblocks)
 
-**[Full API Doc created from source](https://vitkarpov.com/jblocks)**
+**[Full API Doc created from source](http://vitkarpov.com/jblocks)**
 
 jBlocks helps to create interface components in a functional programming flavour.
 
 It's build on the following simple rules:
 
 - declare your components
-- set `data-component` and `data-props` attributes in HTML to bind an instance of the component (will be created in the future) to the node
+- set special data-attributes in HTML to bind an instance of the component (will be created in the future) to the node
 - interact with components using API, events and other components
 
 ## Give me an example
@@ -119,6 +119,6 @@ Include the library:
 
 `jBlocks` namespace is now in global scope. If you need commonjs support, let me know.
 
-You can use the **[full API Doc generated from source](https://vitkarpov.com/jblocks)**.
+You can use the **[full API Doc generated from source](http://vitkarpov.com/jblocks)**.
 
 Also, feel free to drop me a line — [viktor.s.karpov@gmail.com](mailto:viktor.s.karpov@gmail.com)
