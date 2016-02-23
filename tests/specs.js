@@ -2,7 +2,8 @@ var html = [
     '<div class="js-foo-1" data-component="foo" data-props=\'{ "step": 1 }\'></div>',
     '<div class="js-foo-2" data-component="foo" data-props=\'{ "step": 2 }\'></div>',
     '<div class="js-bar" data-component="bar"></div>',
-    '<div class="js-baz" data-component="baz"><span class="foo"></span><span class="bar"><span class="bar-inner"></span></div>'
+    '<div class="js-baz" data-component="baz"><span class="foo"></span><span class="bar"><span class="bar-inner"></span></div>',
+    '<div class="js-counter" data-component="counter"></div>'
 ].join();
 
 jBlocks.define('foo', {
@@ -37,6 +38,13 @@ jBlocks.define('baz', {
         },
         onClickBar: function() {
             this.clickedOnBar = true;
+        }
+    }
+});
+jBlocks.define('counter', {
+    methods: {
+        inc: function() {
+            this.emit('changed');
         }
     }
 });
@@ -140,6 +148,17 @@ describe('jblocks', function() {
                 instanceBaz.emit('my-custom-event', {
                     a: 2
                 });
+            });
+            it('should call a handler when component emits an event inside its method (bug #13)', function() {
+                var counter = jBlocks.get(document.querySelector('.js-counter'));
+                var called = false;
+
+                counter.on('changed', function() {
+                    called = true;
+                });
+                counter.inc();
+
+                called.should.be.ok();
             });
         });
         describe('on', function() {
