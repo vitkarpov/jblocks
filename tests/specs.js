@@ -183,12 +183,14 @@ describe('jblocks', function() {
                     document.querySelector('.js-baz .foo').click();
 
                     baz.clickedOnFoo.should.eql(true);
+                    baz.clickedOnBar.should.eql(false);
                 });
                 it('for element inside the specifying one', function() {
                     var baz = jBlocks.get(document.querySelector('.js-baz'));
                     document.querySelector('.js-baz .bar-inner').click();
 
                     baz.clickedOnBar.should.eql(true);
+                    baz.clickedOnFoo.should.eql(false);
                 })
             });
         });
