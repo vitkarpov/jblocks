@@ -1,6 +1,6 @@
 {
   "name": "jblocks",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A tiny JavaScript library helps to create UI components",
   "author": "Vit Karpov <viktor.s.karpov@gmail.com>",
   "license": "MIT",
