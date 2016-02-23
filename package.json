@@ -1,7 +1,7 @@
 {
   "name": "jblocks",
-  "version": "1.0.0",
-  "description": "Nanoframework for creating UI-components",
+  "version": "1.0.1",
+  "description": "A tiny JavaScript library helps to create UI components",
   "author": "Vit Karpov <viktor.s.karpov@gmail.com>",
   "license": "MIT",
   "devDependencies": {
