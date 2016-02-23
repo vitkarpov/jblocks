@@ -14,7 +14,7 @@
     "mocha": "^2.3.3",
     "should": "^7.1.0"
   },
-  "main": "src/jblocks.js",
+  "main": "lib/index.js",
   "directories": {
     "test": "tests"
   },
@@ -27,13 +27,10 @@
     "url": "git+https://github.com/vitkarpov/jblocks.git"
   },
   "keywords": [
-    "jquery"
+    "UI"
   ],
   "bugs": {
     "url": "https://github.com/vitkarpov/jblocks/issues"
   },
-  "files": [
-    "dist"
-  ],
   "homepage": "https://github.com/vitkarpov/jblocks"
 }
