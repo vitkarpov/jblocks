@@ -30,6 +30,11 @@ jBlocks.define('baz', {
         'click .bar': 'onClickBar'
     },
     methods: {
+        oninit: function() {
+            this.clickedOnSelf = false;
+            this.clickedOnFoo = false;
+            this.clickedOnBar = false;
+        },
         onClickSelf: function() {
             this.clickedOnSelf = true;
         },
