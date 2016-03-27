@@ -18,8 +18,8 @@ jBlocks.define('foo', {
 });
 jBlocks.define('bar', {
     methods: {
-        oninit: function() {
-            this.emit('inited', 'hello, world!');
+        sayhi: function() {
+            this.emit('hello', 'hello, world!');
         }
     }
 });
@@ -112,16 +112,12 @@ describe('jblocks', function() {
         });
     });
     describe('#forget', function() {
+        beforeEach(function() {
+            jBlocks.define('mega-foo', {});
+        });
         it('should remove existing declaration', function() {
-            jBlocks.forget('bar');
-            var catched = false;
-
-            try {
-                jBlocks.define('bar')
-            } catch(e) {
-                catched = true;
-            }
-            catched.should.be.eql(false);
+            jBlocks.forget('mega-foo');
+            jBlocks.define('mega-foo').should.not.throw();
         });
     });
     describe('#lifecycle', function() {
@@ -170,9 +166,10 @@ describe('jblocks', function() {
             it('should subsribe component for an event', function() {
                 var instance = jBlocks.get(document.querySelector('.js-bar'));
 
-                instance.on('inited', function(data) {
+                instance.on('hello', function(data) {
                     data.should.eql('hello, world!');
                 });
+                instance.sayhi();
             });
         });
         describe('events section', function() {
