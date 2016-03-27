@@ -69,7 +69,7 @@ jBlocks.define('counter', {
 To make some node as a root node of the component we should set special `data` attributes:
 
 - `data-component` — name of the given component (`counter` in this case)
-- `data-props` — initial properties (`{ "initialValue": 10 }` in this case)
+- `data-props` — initial properties (`{ "initialValue": 2 }` in this case)
 
 ```html
 <div class="js-counter" data-component="counter" data-props='{ "initialValue": 2 }'>
