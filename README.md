@@ -3,7 +3,8 @@
 [![NPM version](https://badge.fury.io/js/jblocks.png)](http://badge.fury.io/js/jblocks)
 [![Build Status](https://travis-ci.org/vitkarpov/jblocks.png?branch=master)](https://travis-ci.org/vitkarpov/jblocks)
 
-**[Full API Doc created from source](http://vitkarpov.com/jblocks)**
+- **[Codepen DEMO](http://codepen.io/vitkarpov/pen/eZReaE?editors=0010)**
+- **[Full API Doc created from source](http://vitkarpov.com/jblocks)**
 
 jBlocks helps to create interface components in a functional programming flavour.
 
@@ -34,7 +35,7 @@ jBlocks.define('counter', {
 
     methods: {
         oninit: function() {
-            this._currentValue = Number(this.params.initialValue);
+            this._currentValue = Number(this.props.initialValue);
         },
         ondestroy: function() {
             this._currentValue = null;
@@ -44,14 +45,18 @@ jBlocks.define('counter', {
          */
         inc: function() {
             this._currentValue++;
-            this.emit('changed', this._currentValue);
+            this.emit('changed', {
+                value: this._currentValue
+            });
         },
         /**
          * Decreases the counter, emits changed event
          */
         dec: function() {
             this._currentValue--;
-            this.emit('changed', this._currentValue);
+            this.emit('changed', {
+                value: this._currentValue
+            });
         },
         /**
          * Returns the current value
@@ -69,10 +74,10 @@ jBlocks.define('counter', {
 To make some node as a root node of the component we should set special `data` attributes:
 
 - `data-component` — name of the given component (`counter` in this case)
-- `data-props` — initial properties (`{ "initialValue": 10 }` in this case)
+- `data-props` — initial properties (`{ "initialValue": 2 }` in this case)
 
 ```html
-<div class="js-counter" data-component="сounter" data-props='{ "initialValue": 2 }'>
+<div class="js-counter" data-component="counter" data-props='{ "initialValue": 2 }'>
     <button class="js-inc">+</button>
     <button class="js-dec">-</button>
 </div>
@@ -114,7 +119,7 @@ counter.destroy();
 Include the library:
 
 ```html
-<script type="text/javascript" src="https://cdn.rawgit.com/vitkarpov/jblocks/master/src/jblocks.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/vitkarpov/jblocks/master/lib/index.js"></script>
 ```
 
 `jBlocks` namespace is now in global scope. If you need commonjs support, let me know.

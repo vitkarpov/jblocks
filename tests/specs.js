@@ -2,7 +2,8 @@ var html = [
     '<div class="js-foo-1" data-component="foo" data-props=\'{ "step": 1 }\'></div>',
     '<div class="js-foo-2" data-component="foo" data-props=\'{ "step": 2 }\'></div>',
     '<div class="js-bar" data-component="bar"></div>',
-    '<div class="js-baz" data-component="baz"><span class="foo"></span><span class="bar"><span class="bar-inner"></span></div>'
+    '<div class="js-baz" data-component="baz"><span class="foo"></span><span class="bar"><span class="bar-inner"></span></div>',
+    '<div class="js-counter" data-component="counter"></div>'
 ].join();
 
 jBlocks.define('foo', {
@@ -17,8 +18,8 @@ jBlocks.define('foo', {
 });
 jBlocks.define('bar', {
     methods: {
-        oninit: function() {
-            this.emit('inited', 'hello, world!');
+        sayhi: function() {
+            this.emit('hello', 'hello, world!');
         }
     }
 });
@@ -29,6 +30,11 @@ jBlocks.define('baz', {
         'click .bar': 'onClickBar'
     },
     methods: {
+        oninit: function() {
+            this.clickedOnSelf = false;
+            this.clickedOnFoo = false;
+            this.clickedOnBar = false;
+        },
         onClickSelf: function() {
             this.clickedOnSelf = true;
         },
@@ -37,6 +43,13 @@ jBlocks.define('baz', {
         },
         onClickBar: function() {
             this.clickedOnBar = true;
+        }
+    }
+});
+jBlocks.define('counter', {
+    methods: {
+        inc: function() {
+            this.emit('changed');
         }
     }
 });
@@ -99,16 +112,12 @@ describe('jblocks', function() {
         });
     });
     describe('#forget', function() {
+        beforeEach(function() {
+            jBlocks.define('mega-foo', {});
+        });
         it('should remove existing declaration', function() {
-            jBlocks.forget('bar');
-            var catched = false;
-
-            try {
-                jBlocks.define('bar')
-            } catch(e) {
-                catched = true;
-            }
-            catched.should.be.eql(false);
+            jBlocks.forget('mega-foo');
+            jBlocks.define('mega-foo').should.not.throw();
         });
     });
     describe('#lifecycle', function() {
@@ -141,14 +150,26 @@ describe('jblocks', function() {
                     a: 2
                 });
             });
+            it('should call a handler when component emits an event inside its method (bug #13)', function() {
+                var counter = jBlocks.get(document.querySelector('.js-counter'));
+                var called = false;
+
+                counter.on('changed', function() {
+                    called = true;
+                });
+                counter.inc();
+
+                called.should.be.ok();
+            });
         });
         describe('on', function() {
             it('should subsribe component for an event', function() {
                 var instance = jBlocks.get(document.querySelector('.js-bar'));
 
-                instance.on('inited', function(data) {
+                instance.on('hello', function(data) {
                     data.should.eql('hello, world!');
                 });
+                instance.sayhi();
             });
         });
         describe('events section', function() {
@@ -164,12 +185,14 @@ describe('jblocks', function() {
                     document.querySelector('.js-baz .foo').click();
 
                     baz.clickedOnFoo.should.eql(true);
+                    baz.clickedOnBar.should.eql(false);
                 });
                 it('for element inside the specifying one', function() {
                     var baz = jBlocks.get(document.querySelector('.js-baz'));
                     document.querySelector('.js-baz .bar-inner').click();
 
                     baz.clickedOnBar.should.eql(true);
+                    baz.clickedOnFoo.should.eql(false);
                 })
             });
         });
