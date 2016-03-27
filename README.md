@@ -72,7 +72,7 @@ To make some node as a root node of the component we should set special `data` a
 - `data-props` — initial properties (`{ "initialValue": 10 }` in this case)
 
 ```html
-<div class="js-counter" data-component="сounter" data-props='{ "initialValue": 2 }'>
+<div class="js-counter" data-component="counter" data-props='{ "initialValue": 2 }'>
     <button class="js-inc">+</button>
     <button class="js-dec">-</button>
 </div>
