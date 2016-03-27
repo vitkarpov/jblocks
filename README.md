@@ -3,7 +3,8 @@
 [![NPM version](https://badge.fury.io/js/jblocks.png)](http://badge.fury.io/js/jblocks)
 [![Build Status](https://travis-ci.org/vitkarpov/jblocks.png?branch=master)](https://travis-ci.org/vitkarpov/jblocks)
 
-**[Full API Doc created from source](http://vitkarpov.com/jblocks)**
+- **[Codepen DEMO](http://codepen.io/vitkarpov/pen/eZReaE?editors=0010)**
+- **[Full API Doc created from source](http://vitkarpov.com/jblocks)**
 
 jBlocks helps to create interface components in a functional programming flavour.
 
@@ -34,7 +35,7 @@ jBlocks.define('counter', {
 
     methods: {
         oninit: function() {
-            this._currentValue = Number(this.params.initialValue);
+            this._currentValue = Number(this.props.initialValue);
         },
         ondestroy: function() {
             this._currentValue = null;
@@ -44,14 +45,18 @@ jBlocks.define('counter', {
          */
         inc: function() {
             this._currentValue++;
-            this.emit('changed', this._currentValue);
+            this.emit('changed', {
+                value: this._currentValue
+            });
         },
         /**
          * Decreases the counter, emits changed event
          */
         dec: function() {
             this._currentValue--;
-            this.emit('changed', this._currentValue);
+            this.emit('changed', {
+                value: this._currentValue
+            });
         },
         /**
          * Returns the current value
