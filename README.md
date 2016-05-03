@@ -113,16 +113,31 @@ counter.getCurrentValue();
 counter.destroy();
 ```
 
-## How do I start?
+## Usage
 
+### CDN
 
 Include the library:
 
 ```html
-<script type="text/javascript" src="https://cdn.rawgit.com/vitkarpov/jblocks/master/lib/index.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jblocks/1.1.0/jblocks.js"></script>
 ```
 
-`jBlocks` namespace is now in global scope. If you need commonjs support, let me know.
+`jBlocks` namespace is now in global scope.
+
+### Commonjs
+
+First of all, get the package using npm:
+
+```
+npm install jblocks
+```
+
+After the package ends up in you `node_modules`:
+
+```js
+var jblocks = require('jblocks');
+```
 
 You can use the **[full API Doc generated from source](http://vitkarpov.com/jblocks)**.
 
