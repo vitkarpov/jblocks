@@ -12,15 +12,20 @@
     "jquery": "^2.1.4",
     "jsdoc": "^3.4.0",
     "mocha": "^2.3.3",
-    "should": "^7.1.0"
+    "should": "^7.1.0",
+    "webpack": "^1.13.0"
   },
   "main": "lib/index.js",
+  "files": [
+    "jblocks.js"
+  ],
   "directories": {
     "test": "tests"
   },
   "scripts": {
+    "build": "./node_modules/.bin/webpack index.browser.js jblocks.js",
     "test": "node node_modules/.bin/gulp test",
-    "doc": "./node_modules/.bin/jsdoc ./jBlocks.js -t ./node_modules/ink-docstrap/template -c ./jsdoc.json -d doc -R README.md"
+    "doc": "./node_modules/.bin/jsdoc ./lib/index.js -t ./node_modules/ink-docstrap/template -c ./jsdoc.json -d doc -R README.md"
   },
   "repository": {
     "type": "git",
@@ -32,5 +37,8 @@
   "bugs": {
     "url": "https://github.com/vitkarpov/jblocks/issues"
   },
-  "homepage": "https://github.com/vitkarpov/jblocks"
+  "homepage": "https://github.com/vitkarpov/jblocks",
+  "dependencies": {
+    "true-pubsub": "^1.0.0"
+  }
 }
