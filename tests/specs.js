@@ -69,6 +69,11 @@ describe('jblocks', function() {
 
             instance.name.should.eql('bar');
         });
+        it('should return an instance of jBlocks.Component', function() {
+            var instance = jBlocks.get(document.querySelector('.js-bar'));
+
+            (instance instanceof jBlocks.Component).should.eql(true);
+        });
     });
     describe('#destroy', function() {
         beforeEach(function() {
