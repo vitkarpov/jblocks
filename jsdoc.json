@@ -20,6 +20,7 @@
     "theme"           : "cerulean",
     "linenums"        : true,
     "collapseSymbols" : false,
-    "inverseNav"      : true
+    "inverseNav"      : true,
+    "analytics"       : { "ua": "UA-77268137-1", "domain": "vitkarpov.com" }
   }
 }
