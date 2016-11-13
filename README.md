@@ -120,7 +120,7 @@ counter.destroy();
 Include the library:
 
 ```html
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jblocks/1.1.0/jblocks.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jblocks/1.0.6/index.js"></script>
 ```
 
 `jBlocks` namespace is now in global scope.
