@@ -16,7 +16,8 @@
   },
   "main": "lib/index.js",
   "files": [
-    "jblocks.js"
+    "jblocks.js",
+    "README.md"
   ],
   "directories": {
     "test": "tests"
