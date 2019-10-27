@@ -120,8 +120,10 @@ counter.destroy();
 Include the library:
 
 ```html
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jblocks/1.0.6/index.js"></script>
+<script type="text/javascript" src="https://unpkg.com/jblocks@latest/jblocks.js"></script>
 ```
+
+:warning: You may use any available version instead of `latest` in the URL above.
 
 `jBlocks` namespace is now in global scope.
 
