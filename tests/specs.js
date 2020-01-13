@@ -198,7 +198,17 @@ describe('jblocks', function() {
 
                     baz.clickedOnBar.should.eql(true);
                     baz.clickedOnFoo.should.eql(false);
-                })
+                });
+                it('should pass event as an argument to the handler', function() {
+                    var rootNode = document.querySelector('.js-baz')
+                    var counter = jBlocks.get(rootNode);
+                    var _onClickSelf = counter.onClickSelf;
+                    counter.onClickSelf = function(e) {
+                        e.target.should.be.eql(rootNode);
+                    }
+                    rootNode.click();
+                    counter.onClickSelf = _onClickSelf;
+                });
             });
         });
     });
