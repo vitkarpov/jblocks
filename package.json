@@ -24,7 +24,7 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/webpack index.browser.js jblocks.js",
-    "test": "node node_modules/.bin/gulp test",
+    "test": "node_modules/.bin/gulp test",
     "doc": "./node_modules/.bin/jsdoc ./lib/index.js -t ./node_modules/ink-docstrap/template -c ./jsdoc.json -d doc -R README.md"
   },
   "repository": {
