@@ -5,13 +5,9 @@
   "author": "Viktor Karpov <viktor.s.karpov@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-mocha": "^2.1.3",
-    "gulp-mocha-phantomjs": "^0.10.1",
     "ink-docstrap": "^1.1.1",
+    "jest": "^24.9.0",
     "jsdoc": "^3.4.0",
-    "mocha": "^2.3.3",
-    "should": "^7.1.0",
     "webpack": "^1.13.0"
   },
   "main": "lib/index.js",
@@ -24,7 +20,7 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/webpack index.browser.js jblocks.js",
-    "test": "node_modules/.bin/gulp test",
+    "test": "node_modules/.bin/jest",
     "doc": "./node_modules/.bin/jsdoc ./lib/index.js -t ./node_modules/ink-docstrap/template -c ./jsdoc.json -d doc -R README.md"
   },
   "repository": {
