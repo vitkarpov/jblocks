@@ -1,6 +1,6 @@
 # jBlocks
 
-[![NPM version](https://badge.fury.io/js/jblocks.png)](http://badge.fury.io/js/jblocks)
+[![NPM version](https://badge.fury.io/js/jblocks.svg)](http://badge.fury.io/js/jblocks)
 ![Tests Status](https://github.com/vitkarpov/jblocks/workflows/Unit%20Tests/badge.svg)
 
 - **[Codepen DEMO](http://codepen.io/vitkarpov/pen/eZReaE?editors=0010)**
