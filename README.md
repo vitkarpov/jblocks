@@ -1,7 +1,7 @@
 # jBlocks
 
 [![NPM version](https://badge.fury.io/js/jblocks.png)](http://badge.fury.io/js/jblocks)
-[![Tests Status](https://github.com/vitkarpov/jblocks/workflows/blank/badge.svg)](https://travis-ci.org/vitkarpov/jblocks)
+![Tests Status](https://github.com/vitkarpov/jblocks/workflows/Unit Tests/badge.svg)
 
 - **[Codepen DEMO](http://codepen.io/vitkarpov/pen/eZReaE?editors=0010)**
 - **[Full API Doc created from source](http://vitkarpov.com/jblocks)**
