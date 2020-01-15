@@ -1,6 +1,8 @@
 language: node_js
 before_script: npm run-script build
 node_js:
-  - 0.10
+  - 8.15.0
+script:
+   - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then npm test; fi'
 notifications:
   email: false
