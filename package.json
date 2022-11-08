@@ -8,7 +8,7 @@
     "ink-docstrap": "^1.1.1",
     "jest": "^24.9.0",
     "jsdoc": "^3.4.0",
-    "webpack": "^1.13.0"
+    "webpack": "^5.74.0"
   },
   "main": "lib/index.js",
   "files": [
