@@ -15,7 +15,7 @@
   },
   "main": "lib/index.js",
   "files": [
-    "dist"
+    "jblocks.js"
   ],
   "directories": {
     "test": "tests"
