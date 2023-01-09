@@ -9,20 +9,20 @@
     "jest": "^24.9.0",
     "jsdoc": "^3.4.0",
     "request": "^2.88.2",
-    "webpack": "^1.13.0"
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   },
   "main": "lib/index.js",
   "files": [
-    "jblocks.js",
-    "README.md"
+    "dist"
   ],
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "build": "./node_modules/.bin/webpack index.browser.js jblocks.js",
+    "build": "npx webpack --mode=production",
     "test": "node_modules/.bin/jest",
-    "doc": "./node_modules/.bin/jsdoc ./lib/index.js -t ./node_modules/ink-docstrap/template -c ./jsdoc.json -d doc -R README.md"
+    "doc": "npx jsdoc ./lib/index.js -t ./node_modules/ink-docstrap/template -c ./jsdoc.json -d doc -R README.md"
   },
   "repository": {
     "type": "git",
