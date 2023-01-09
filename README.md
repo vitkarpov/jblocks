@@ -4,7 +4,7 @@
 ![Tests Status](https://github.com/vitkarpov/jblocks/workflows/Unit%20Tests/badge.svg)
 
 - **[Codepen DEMO](http://codepen.io/vitkarpov/pen/eZReaE?editors=0010)**
-- **[Full API Doc created from source](http://github.com/jblocks/API.md)**
+- **[Full API Doc created from source](https://github.com/vitkarpov/jblocks/blob/master/API.md)**
 
 jBlocks helps to create interface components in a functional programming flavour.
 
