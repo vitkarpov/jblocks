@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>jBlocks demo</title>
+</head>
+<body>
+  <div class="js-counter" data-component="counter" data-props='{ "initialValue": 2 }'>
+      <button class="js-inc">+</button>
+      <button class="js-dec">-</button>
+  </div>
+  <button class="js-button-inc">Increase the counter</button>
+  <div class="js-console"></div>
+  <script src="./dist/main.js"></script>
+  <script>
+    // declare a new component
+    jBlocks.define('counter', {
+        events: {
+            'click .js-inc': 'inc',
+            'click .js-dec': 'dec'
+        },
+
+        methods: {
+            oninit: function() {
+                this._currentValue = Number(this.props.initialValue);
+            },
+            ondestroy: function() {
+                this._currentValue = null;
+            },
+            /**
+             * Increases the counter, emits changed event
+             */
+            inc: function() {
+                this._currentValue++;
+                this.emit('changed', {
+                  value: this._currentValue
+                });
+            },
+            /**
+             * Decreases the counter, emits changed event
+             */
+            dec: function() {
+                this._currentValue--;
+                this.emit('changed', {
+                  value: this._currentValue
+                });
+            },
+            /**
+             * Returns the current value
+             * @return {Number}
+             */
+            getCurrentValue: function() {
+                return this._currentValue;
+            }
+        }
+    });
+
+    // create an instance of the counter
+    var counter = jBlocks.get(document.querySelector('.js-counter'));
+
+    // use event to react on what happens during lifecycle
+    counter.on('changed', function(data) {
+      document.querySelector('.js-console').innerText = data.value;
+    });
+
+    // use component api to interact with somewhere in the app
+    document.querySelector('.js-button-inc').addEventListener('click', function() {
+      counter.inc();
+    });
+  </script>
+</body>
+</html>
